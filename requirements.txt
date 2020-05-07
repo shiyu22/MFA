@@ -1,0 +1,6 @@
+numpy
+pandas
+dill
+tqdm
+python-speech-features
+natsort
