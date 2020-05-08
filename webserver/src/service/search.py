@@ -32,7 +32,7 @@ def do_search(img, voice):
     try:
         feats_img = img_to_vec(img)
         feats_voc = voc_to_vec(voice)
-        print(feats_voc,feats_img)
+        # print(feats_voc,feats_img)
 
         index_client = milvus_client()
         _, re_img = search_vectors(index_client, IMG_TABLE, [feats_img], 1)
