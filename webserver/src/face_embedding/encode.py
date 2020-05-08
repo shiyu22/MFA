@@ -27,9 +27,10 @@ def img_to_vec(img):
     img = cv2.imread(img)
     img = model.get_input(img)
     if img is None:
-        print('No face detected or Multiple faces detected')
+        print('------------------No face detected or Multiple faces detected')
         return None
     else:
+        print('----------------feature')
         f1 = model.get_feature(img)
         print(f1.shape)
         return f1
