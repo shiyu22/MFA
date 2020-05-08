@@ -77,14 +77,10 @@ def do_search_api():
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.wav')
         file_voc.save(voc_path)
 
-        try:
-            res = do_search(img_path, voc_path)
-            # res[1] = request.url_root + "data/" + str(res[1]) + '.png'
-            print("------a",res)
-        except:
-            return "There has no results, please make sure there is only one face in the video."
+        res = do_search(img_path, voc_path)
+        res[1] = request.url_root + "data/" + str(res[1]) + '.png'
+        print("------a",res)
 
-        
         return "{}".format(res), 200
     return "not found", 400
 
