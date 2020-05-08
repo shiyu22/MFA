@@ -38,7 +38,7 @@ def insert_vectors(client, table_name, vectors, ids):
     try:
         status, ids = client.insert(collection_name=table_name, records=vectors, ids=ids)
         print(status, ids)
-        return status, ids
+        return status
     except Exception as e:
         log.error(e)
 
