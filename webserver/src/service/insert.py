@@ -49,12 +49,13 @@ def insert_data_to_milvus(ids, img, voc):
 
     voctors_img = img_to_vec(img)
     voctors_voc = voc_to_vec(voc)
+    print(vectors_img,vectors_voc)
     if not voctors_img:
+        print("Please make sure there is only one face in the video.")
         return "Please make sure there is only one face in the video."
     try:
-        print(len(vectors_img),len(vectors_voc))
-        insert_vectors(index_client, IMG_TABLE, [vectors_img], ids)
-        insert_vectors(index_client, VOC_TABLE, [vectors_voc], ids)
+        insert_vectors(index_client, IMG_TABLE, vectors_img, ids)
+        insert_vectors(index_client, VOC_TABLE, vectors_voc, ids)
         return "insert successfully."
     except Exception as e:
         logging.error(e)
