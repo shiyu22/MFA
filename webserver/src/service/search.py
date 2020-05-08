@@ -30,6 +30,7 @@ def search_loc_in_pg(cur, ids):
 
 def do_search(img, voice):
     try:
+        conn = None
         feats_img = img_to_vec(img)
         feats_voc = voc_to_vec(voice)
         # print(feats_voc,feats_img)
