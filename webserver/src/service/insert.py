@@ -55,7 +55,6 @@ def insert_data_to_milvus(ids, img, voc):
     try:
         insert_vectors(index_client, IMG_TABLE, [vectors_img], [ids])
         status = insert_vectors(index_client, VOC_TABLE, [vectors_voc], [ids])
-
         return status
     except Exception as e:
         logging.error(e)

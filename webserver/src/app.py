@@ -51,7 +51,7 @@ def do_insert_api():
         try:
             status = do_insert(name, ids[:-1], img_path, voc_path)
         except:
-            return "fileed insert", 400
+            return "Failed insert, please make sure there is only one face in the video.", 400
         return "{}".format(status), 200
     else:
         return "no file data", 400
@@ -79,8 +79,8 @@ def do_search_api():
 
         try:
             res = do_search(img_path, voc_path)
-            res[1] = request.url_root + "data/" + str(res[1]) + '.png'
-            # print("------a",res)
+            if res[0]:
+                res[1] = request.url_root + "data/" + str(res[1]) + '.png'
         except:
             return "There has no results, please make sure there is only one face in the video."
 
@@ -90,4 +90,4 @@ def do_search_api():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5005)
+    app.run(host="0.0.0.0")
