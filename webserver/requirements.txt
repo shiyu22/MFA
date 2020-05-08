@@ -7,3 +7,4 @@ natsort
 flask-cors
 flask
 flask_restful
+pymilvus
