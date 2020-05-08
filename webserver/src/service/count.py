@@ -1,7 +1,6 @@
 import logging
 import time
-from common.config import SIM_TABLE
-from diskcache import Cache
+from common.config import IMG_TABLE
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index, count_table
 
 

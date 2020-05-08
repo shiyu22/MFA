@@ -3,7 +3,8 @@ from common.const import default_cache_dir
 from common.config import PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE, PG_TABLE
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
 from diskcache import Cache
-from deep-speaker.encode import voc_to_vec
+from deep_speaker.encode import voc_to_vec
+from face_embedding.encode import img_to_vec
 import psycopg2
 
 
@@ -39,16 +40,14 @@ def do_search(img, voice):
         ids_voc = re_voc[0].id
         dis_img = re_img[0].distance
 
-        res = {}
+        res = ['false', -1 ,'-1']
         if dis_img[0]>0.75 and ids_img[0]==ids_voc[0]:
             conn = connect_postgres_server()
             cur = conn.cursor()
             
             index = search_loc_in_pg(cur, ids_voc[0])
-            res[ids_img[0]] = index
-            return res, true
-        else:
-            return res, false
+            res = ['ture', ids_img, index]
+        return res
 
     except Exception as e:
         logging.error(e)

@@ -1,7 +1,7 @@
 import os
 import os.path as path
 import logging
-from common.config import SIM_TABLE,SUB_TABLE,SUPER_TABLE,NUM
+from common.config import IMG_TABLE,VOC_TABLE
 from common.const import UPLOAD_PATH
 from service.search import do_search
 from service.insert import do_insert
@@ -13,7 +13,7 @@ from flask_restful import reqparse
 from werkzeug.utils import secure_filename
 import numpy as np
 from numpy import linalg as LA
-import time
+import datetime
 
 
 app = Flask(__name__)
@@ -39,11 +39,12 @@ def do_insert_api():
         add_argument("Name", type=str). \
         parse_args()
 
+    name = args['Name']
     file_img = request.files.get('img', "")
     file_voc = request.files.get('voc', "")
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], ids+'.jpg')
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.jpg')
         file_img.save(file_path)
         try:
             status = do_insert(name, ids, file_img, file_voc)
@@ -69,10 +70,11 @@ def do_search_api():
     if file_img and file_voc:
         try:
             res = do_search(table_name, molecular_name, top_k)
+            res[1] = request.url_root + "data/" +res[1]
         except:
-            return "There has no results, please input the correct molecular and ensure the table has data."
+            return "There has no results, please make sure there is only one face in the video."
 
-        return jsonify(res), 200
+        return res, 200
     return "not found", 400
 
 

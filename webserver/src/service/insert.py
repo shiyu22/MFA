@@ -3,7 +3,8 @@ from common.const import default_cache_dir
 from common.config import PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE, PG_TABLE, IMG_TABLE, VOC_TABLE
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
 import datetime
-from deep-speaker.encode import voc_to_vec
+from deep_speaker.encode import voc_to_vec
+from face_embedding.encode import img_to_vec
 import psycopg2
 
 
@@ -17,7 +18,7 @@ def connect_postgres_server():
 
 
 def create_pg_table(conn, cur):
-    sql = "CREATE TABLE " + PG_TABLE + " (ids bigint, name text) if not exists;"
+    sql = "CREATE TABLE IF NOT EXISTS " + PG_TABLE + " (ids bigint, name text);"
     print(sql)
     try:
         cur.execute(sql)
@@ -46,7 +47,7 @@ def insert_data_to_milvus(ids, img, voc):
         create_table(index_client, table_name=IMG_TABLE)
         create_table(index_client, table_name=VOC_TABLE)
 
-    voctors_img = 
+    voctors_img = img_to_vec(img)
     voctors_voc = voc_to_vec(voc)
     if not voctors_img:
         return "Please make sure there is only one face in the video."

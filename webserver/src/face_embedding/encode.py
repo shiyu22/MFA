@@ -22,7 +22,7 @@ args = parser.parse_args()
 
 
 
-def face_feature(img):
+def img_to_vec(img):
     model = face_model.FaceModel(args)
     img = cv2.imread(img)
     img = model.get_input(img)
