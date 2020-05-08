@@ -38,7 +38,8 @@ def do_search(img, voice):
         # print(status)
         ids_img = re_img[0].id
         ids_voc = re_voc[0].id
-        dis_img = re_img[0].distance
+        dis_img = float(re_img[0].distance)
+        print(ids_img,ids_voc,dis_img)
 
         res = ['false', -1 ,'-1']
         if dis_img[0]>0.75 and ids_img[0]==ids_voc[0]:
