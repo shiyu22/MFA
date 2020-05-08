@@ -40,3 +40,4 @@ flask_restful
 pymilvus
 librosa
 tensorflow
+keras
