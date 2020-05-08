@@ -35,14 +35,14 @@ def do_search(img, voice):
         index_client = milvus_client()
         _, re_img = search_vectors(index_client, IMG_TABLE, [feats_img], 1)
         _, re_voc = search_vectors(index_client, VOC_TABLE, [feats_voc], 1)
-        print("-----------------", re_img[0], re_voc[0])
-        ids_img = re_img[0].id
-        ids_voc = re_voc[0].id
-        dis_img = float(re_img[0].distance)
+        print("-----------------", re_img[0][0], re_voc[0][0])
+        ids_img = re_img[0][0].id
+        ids_voc = re_voc[0][0].id
+        dis_img = float(re_img[0][0].distance)
         print(ids_img,ids_voc,dis_img)
 
         res = ['false', -1 ,'-1']
-        if dis_img[0]>0.75 and ids_img[0]==ids_voc[0]:
+        if dis_img>0.75 and ids_img==ids_voc:
             conn = connect_postgres_server()
             cur = conn.cursor()
             
