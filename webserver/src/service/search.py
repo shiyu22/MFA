@@ -43,7 +43,7 @@ def do_search(img, voice):
         dis_img = float(re_img[0][0].distance)
         print(ids_img,ids_voc,dis_img)
 
-        res = ['false', -1 ,'-1']
+        res = ['-1', -1 ,'-1']
         if dis_img>0.75 and ids_img==ids_voc:
             conn = connect_postgres_server()
             cur = conn.cursor()
