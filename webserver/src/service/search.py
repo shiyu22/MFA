@@ -21,6 +21,7 @@ def search_loc_in_pg(cur, ids, table_name=PG_TABLE):
         sql = "select name from " + table_name+ " where ids = '" + str(ids) + "';"
         cur.execute(sql)
         rows = cur.fetchall()
+        print("search:", rows[0][0])
         return str(rows[0][0])
     except:
         print("search faild!")
@@ -48,6 +49,7 @@ def do_search(img, voice):
             
             index = search_loc_in_pg(cur, ids_voc[0])
             res = ['ture', ids_img, index]
+        print(res)
         return res
 
     except Exception as e:
