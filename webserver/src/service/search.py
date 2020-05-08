@@ -2,7 +2,6 @@ import logging
 from common.const import default_cache_dir
 from common.config import PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE, PG_TABLE
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
-from diskcache import Cache
 from deep_speaker.encode import voc_to_vec
 from face_embedding.encode import img_to_vec
 import psycopg2
