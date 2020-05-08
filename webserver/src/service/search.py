@@ -35,7 +35,7 @@ def do_search(img, voice):
         index_client = milvus_client()
         _, re_img = search_vectors(index_client, IMG_TABLE, [feats_img], 1)
         _, re_voc = search_vectors(index_client, VOC_TABLE, [feats_voc], 1)
-        print(re_img, re_voc)
+        print("-----------------", re_img[0], re_voc[0])
         ids_img = re_img[0].id
         ids_voc = re_voc[0].id
         dis_img = float(re_img[0].distance)
