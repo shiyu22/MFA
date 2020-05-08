@@ -4,3 +4,6 @@ dill
 tqdm
 python-speech-features
 natsort
+flask-cors
+flask
+flask_restful
