@@ -1,8 +1,8 @@
 import os
 import os.path as path
 import logging
-from common.config import IMG_TABLE,VOC_TABLE
-from common.const import UPLOAD_PATH
+from common.config import IMG_TABLE, VOC_TABLE
+from common.const import UPLOAD_PATH, DATA_PATH
 from service.search import do_search
 from service.insert import do_insert
 from service.count import do_count
@@ -44,7 +44,7 @@ def do_insert_api():
     file_voc = request.files.get('voc', "")
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
-        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.jpg')
+        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.png')
         file_img.save(img_path)
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         file_voc.save(voc_path)
@@ -72,17 +72,17 @@ def do_search_api():
     file_voc = request.files.get('voc', "")
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
-        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.jpg')
+        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.png')
         file_img.save(img_path)
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.wav')
         file_voc.save(voc_path)
 
         try:
             res = do_search(img_path, voc_path)
-            res[1] = request.url_root + "data/" + str(res[1]) + '.jpg'
+            res[1] = request.url_root + "data/" + str(res[1]) + '.png'
         except:
             return "There has no results, please make sure there is only one face in the video."
-        print(request.url_root + "data/" +str(res[1])+'.jpg')
+        print(request.url_root + "data/" +str(res[1])+'.png')
         return "{}".format(res), 200
     return "not found", 400
 
