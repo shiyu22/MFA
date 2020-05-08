@@ -48,7 +48,7 @@ def do_search(img, voice):
             conn = connect_postgres_server()
             cur = conn.cursor()
             
-            index = search_loc_in_pg(cur, ids_voc[0])
+            index = search_loc_in_pg(cur, ids_voc)
             res = ['ture', ids_img, index]
         print(res)
         return res
