@@ -55,6 +55,7 @@ def do_search(img, voice):
 
     except Exception as e:
         logging.error(e)
+        print("Fail with error {}")
         return "Fail with error {}".format(e)
     finally:
         if index_client:
