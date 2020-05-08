@@ -53,8 +53,8 @@ def do_insert_api():
         try:
             status = do_insert(name, ids[:-1], img_path, voc_path)
         except:
-            return status
-        return "insert successfully", 200
+            return "fileed insert"
+        return status, 200
     else:
         return "no file data", 400
 
