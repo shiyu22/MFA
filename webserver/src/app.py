@@ -45,9 +45,9 @@ def do_insert_api():
     print(name)
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
-        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-4] + '.jpg')
+        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.jpg')
         file_img.save(img_path)
-        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-4] + '.wav')
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         file_voc.save(voc_path)
         print(name, ids, file_img, voc_path)
         try:
