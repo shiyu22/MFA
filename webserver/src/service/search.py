@@ -16,9 +16,10 @@ def connect_postgres_server():
         print("unable to connect to the database")
 
 
-def search_loc_in_pg(cur, ids, table_name=PG_TABLE):
+def search_loc_in_pg(cur, ids):
+    sql = "select name from " + PG_TABLE + " where ids = " + str(ids) + ";"
+    peint(sql)
     try:
-        sql = "select name from " + table_name+ " where ids = '" + str(ids) + "';"
         cur.execute(sql)
         rows = cur.fetchall()
         print("search:", rows[0][0])
