@@ -18,7 +18,7 @@ def connect_postgres_server():
 
 def search_loc_in_pg(cur, ids):
     sql = "select name from " + PG_TABLE + " where ids = " + str(ids) + ";"
-    peint(sql)
+    print(sql)
     try:
         cur.execute(sql)
         rows = cur.fetchall()
@@ -47,7 +47,7 @@ def do_search(img, voice):
         if dis_img>0.75 and ids_img==ids_voc:
             conn = connect_postgres_server()
             cur = conn.cursor()
-            
+            print(ids_voc)
             index = search_loc_in_pg(cur, ids_voc)
             res = ['ture', ids_img, index]
         print(res)
