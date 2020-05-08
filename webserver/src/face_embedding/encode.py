@@ -33,6 +33,7 @@ def img_to_vec(img):
         print('----------------feature')
         f1 = model.get_feature(img)
         print(f1.shape)
+        print(f1)
         return f1
 
 
