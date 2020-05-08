@@ -48,10 +48,7 @@ def insert_data_to_milvus(ids, img, voc):
         create_table(index_client, table_name=VOC_TABLE)
 
     vectors_img = img_to_vec(img)
-    print(vectors_img)
     vectors_voc = voc_to_vec(voc)
-    print(vectors_voc)
-    print('-------',ids)
     if not vectors_img:
         print("Please make sure there is only one face in the video.")
         return "Please make sure there is only one face in the video."
@@ -72,6 +69,5 @@ def do_insert(name, ids, img, voc):
     create_pg_table(conn, cur)
     insert_data_to_pg(conn, cur, ids, name)
     status = insert_data_to_milvus(int(ids), img, voc)
-    print('------------------',status)
     return status
 

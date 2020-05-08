@@ -42,14 +42,12 @@ def do_insert_api():
     name = args['Name']
     file_img = request.files.get('img', "")
     file_voc = request.files.get('voc', "")
-    print(name)
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
         img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.jpg')
         file_img.save(img_path)
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         file_voc.save(voc_path)
-        print(name, ids, file_img, voc_path)
         try:
             status = do_insert(name, ids[:-1], img_path, voc_path)
         except:
@@ -72,13 +70,19 @@ def do_search_api():
     file_img = request.files.get('img', "")
     file_voc = request.files.get('voc', "")
     if file_img and file_voc:
+        ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
+        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.jpg')
+        file_img.save(img_path)
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.wav')
+        file_voc.save(voc_path)
+
         try:
-            res = do_search(table_name, molecular_name, top_k)
+            res = do_search(img_path, voc_path)
             res[1] = request.url_root + "data/" +res[1]
         except:
             return "There has no results, please make sure there is only one face in the video."
 
-        return res, 200
+        return "{}".format(res), 200
     return "not found", 400
 
 

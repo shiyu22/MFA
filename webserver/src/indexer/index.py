@@ -64,6 +64,7 @@ def search_vectors(client, table_name, vectors, top_k):
     }
     status, res = client.search(**param)
     # status, res = client.search_vectors(table_name=table_name, query_records=vectors, top_k=top_k, nprobe=512)
+    print(status, res)
     return status, res
 
 

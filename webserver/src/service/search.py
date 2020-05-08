@@ -34,7 +34,7 @@ def do_search(img, voice):
 
         _, re_img = search_vectors(index_client, table_name, [feats_img], 1)
         status, re_voc = search_vectors(index_client, table_name, [feats_voc], 1)
-        print(status)
+        # print(status)
         ids_img = re_img[0].id
         ids_voc = re_voc[0].id
         dis_img = re_img[0].distance
