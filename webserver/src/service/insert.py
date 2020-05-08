@@ -29,7 +29,7 @@ def create_pg_table(conn, cur):
 
 
 def insert_data_to_pg(conn, cur, ids, name):
-    sql = "insert into " + PG_TABLE + " values (" + ids + ",'" + name + "';"
+    sql = "insert into " + PG_TABLE + " values (" + ids + ",'" + name + "');"
     print(sql)
     try:
         cur.execute(sql)

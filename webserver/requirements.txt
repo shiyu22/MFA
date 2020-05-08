@@ -41,3 +41,4 @@ pymilvus
 librosa
 tensorflow
 keras
+psycopg2-binary

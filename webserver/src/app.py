@@ -42,10 +42,12 @@ def do_insert_api():
     name = args['Name']
     file_img = request.files.get('img', "")
     file_voc = request.files.get('voc', "")
+    print(name)
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.jpg')
         file_img.save(file_path)
+        print(name, ids, file_path)
         try:
             status = do_insert(name, ids, file_img, file_voc)
         except:

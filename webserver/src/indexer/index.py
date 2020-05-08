@@ -67,8 +67,8 @@ def search_vectors(client, table_name, vectors, top_k):
 
 
 def has_table(client, table_name):
-    status = client.has_collection(table_name)
-    return status
+    status, ok = client.has_collection(table_name)
+    return status, ok
 
 
 def count_table(client, table_name):
