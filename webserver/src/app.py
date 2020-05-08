@@ -79,8 +79,7 @@ def do_search_api():
 
         try:
             res = do_search(img_path, voc_path)
-            if res[0]:
-                res[1] = request.url_root + "data/" + str(res[1]) + '.png'
+            res[1] = request.url_root + "data/" + str(res[1]) + '.png'
         except:
             return "There has no results, please make sure there is only one face in the video."
 
