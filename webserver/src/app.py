@@ -81,7 +81,7 @@ def do_search_api():
             # res[1] = request.url_root + "data/" +res[1]
         except:
             return "There has no results, please make sure there is only one face in the video."
-
+        print(request.url_root + "data/" +str(res[1])+'.jpg')
         return "{}".format(res), 200
     return "not found", 400
 
