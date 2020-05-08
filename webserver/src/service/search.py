@@ -50,7 +50,7 @@ def do_search(img, voice):
             print(ids_voc)
             index = search_loc_in_pg(cur, ids_voc)
             res = ['ture', ids_img, index]
-        print(res)
+        print("-----s",res)
         return res
 
     except Exception as e:
