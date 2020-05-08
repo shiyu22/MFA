@@ -7,7 +7,7 @@ from deep_speaker.conv_models import DeepSpeakerModel
 from deep_speaker.test import batch_cosine_similarity
 
 
-def encoder():
+def voc_to_vec():
     np.random.seed(123)
     random.seed(123)
 
