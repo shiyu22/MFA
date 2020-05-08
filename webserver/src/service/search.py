@@ -1,6 +1,6 @@
 import logging
 from common.const import default_cache_dir
-from common.config import PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE, PG_TABLE
+from common.config import PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DATABASE, PG_TABLE, IMG_TABLE, VOC_TABLE
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
 from deep_speaker.encode import voc_to_vec
 from face_embedding.encode import img_to_vec
@@ -30,10 +30,11 @@ def do_search(img, voice):
     try:
         feats_img = img_to_vec(img)
         feats_voc = voc_to_vec(voice)
-        index_client = milvus_client()
+        print(feats_voc,feats_img)
 
-        _, re_img = search_vectors(index_client, table_name, [feats_img], 1)
-        status, re_voc = search_vectors(index_client, table_name, [feats_voc], 1)
+        index_client = milvus_client()
+        _, re_img = search_vectors(index_client, IMG_TABLE, [feats_img], 1)
+        _, re_voc = search_vectors(index_client, VOC_TABLE, [feats_voc], 1)
         # print(status)
         ids_img = re_img[0].id
         ids_voc = re_voc[0].id
