@@ -50,7 +50,7 @@ def do_insert_api():
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         file_voc.save(voc_path)
         try:
-            do_insert(name, ids[:-1], img_path, voc_path)
+            status = do_insert(name, ids[:-1], img_path, voc_path)
         except:
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
     else:
