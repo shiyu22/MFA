@@ -50,12 +50,12 @@ def insert_data_to_milvus(ids, img, voc):
     vectors_img = img_to_vec(img)
     vectors_voc = voc_to_vec(voc)
     if not vectors_img:
-        print("Please make sure there is only one face in the video.")
-        return "Please make sure there is only one face in the video."
+        status = {'status': 'faile', 'message':'there is no file data'}
     try:
         insert_vectors(index_client, IMG_TABLE, [vectors_img], [ids])
-        status = insert_vectors(index_client, VOC_TABLE, [vectors_voc], [ids])
-        return status
+        insert_vectors(index_client, VOC_TABLE, [vectors_voc], [ids])
+        status = {'status': 'success'}
+    return status
     except Exception as e:
         logging.error(e)
         return "Fail with error {}".format(e)

@@ -51,14 +51,11 @@ def do_insert_api():
         file_voc.save(voc_path)
         try:
             do_insert(name, ids[:-1], img_path, voc_path)
-            status = {'status': 'success'}
         except:
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
-            return jsonify(status), 200
-        return jsonify(status), 200
     else:
         status = {'status': 'faile', 'message':'there is no file data'}
-        return jsonify(status), 200
+    return jsonify(status), 200
 
 
 @app.route('/data/<image_name>')
@@ -89,7 +86,6 @@ def do_search_api():
         finally:
             os.remove(img_path)
             os.remove(voc_path)
-
         return "{}".format(res), 200
     else:
         status = {'status': 'faile', 'message':'no file data'}
