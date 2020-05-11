@@ -54,11 +54,11 @@ def do_insert_api():
             status = {'status': 'success'}
         except:
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
-            return jsonify(status), 400
+            return jsonify(status), 200
         return jsonify(status), 200
     else:
         status = {'status': 'faile', 'message':'there is no file data'}
-        return jsonify(status), 400
+        return jsonify(status), 200
 
 
 @app.route('/data/<image_name>')
@@ -85,7 +85,7 @@ def do_search_api():
             res[1] = request.url_root + "data/" + str(res[1]) + '.png'
         except:
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
-            return jsonify(status), 400
+            return jsonify(status), 200
         finally:
             os.remove(img_path)
             os.remove(voc_path)
@@ -93,7 +93,7 @@ def do_search_api():
         return "{}".format(res), 200
     else:
         status = {'status': 'faile', 'message':'no file data'}
-        return jsonify(status), 400
+        return jsonify(status), 200
 
 
 if __name__ == "__main__":
