@@ -18,6 +18,7 @@ import datetime
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
+app.config['DATA_FOLDER'] = DATA_PATH
 app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
@@ -49,12 +50,15 @@ def do_insert_api():
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         file_voc.save(voc_path)
         try:
-            status = do_insert(name, ids[:-1], img_path, voc_path)
+            do_insert(name, ids[:-1], img_path, voc_path)
+            status = {'status': 'success'}
         except:
-            return "Failed insert, please make sure there is only one face in the video.", 400
-        return "{}".format(status), 200
+            status = {'status': 'faile', 'message':'please confirm only one face in camera'}
+            return jsonify(status), 400
+        return jsonify(status), 200
     else:
-        return "no file data", 400
+        status = {'status': 'faile', 'message':'there is no file data'}
+        return jsonify(status), 400
 
 
 @app.route('/data/<image_name>')
@@ -72,20 +76,24 @@ def do_search_api():
     file_voc = request.files.get('voc', "")
     if file_img and file_voc:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
-        img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.png')
+        img_path = os.path.join(app.config['DATA_FOLDER'], ids + '.png')
         file_img.save(img_path)
-        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids + '.wav')
+        voc_path = os.path.join(app.config['DATA_FOLDER'], ids + '.wav')
         file_voc.save(voc_path)
-
         try:
             res = do_search(img_path, voc_path)
             res[1] = request.url_root + "data/" + str(res[1]) + '.png'
         except:
-            return "There has no results, please make sure there is only one face in the video."
+            status = {'status': 'faile', 'message':'please confirm only one face in camera'}
+            return jsonify(status), 400
+        finally:
+            os.remove(img_path)
+            os.remove(voc_path)
 
-        
         return "{}".format(res), 200
-    return "not found", 400
+    else:
+        status = {'status': 'faile', 'message':'no file data'}
+        return jsonify(status), 400
 
 
 if __name__ == "__main__":
