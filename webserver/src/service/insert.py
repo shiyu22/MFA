@@ -49,6 +49,7 @@ def insert_data_to_milvus(ids, img, voc):
 
     vectors_img = img_to_vec(img)
     vectors_voc = voc_to_vec(voc)
+    status = {}
     if not vectors_img:
         status = {'status': 'faile', 'message':'there is no file data'}
     try:
