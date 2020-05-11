@@ -51,7 +51,7 @@ def do_search(img, voice):
             cur = conn.cursor()
             print(ids_voc)
             index = search_loc_in_pg(cur, ids_voc)
-            res = ['ture', ids_img, index]
+            res = ['true', ids_img, index]
         print("-----search:",res)
         return res
 

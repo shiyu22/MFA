@@ -63,7 +63,7 @@ def do_insert_api():
 
 @app.route('/data/<image_name>')
 def image_path(image_name):
-    file_name = DATA_PATH + '/' + image_name
+    file_name = UPLOAD_PATH + '/' + image_name
     print(file_name)
     if path.exists(file_name):
         return send_file(file_name)
