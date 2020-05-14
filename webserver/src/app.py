@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 import numpy as np
 from numpy import linalg as LA
 import datetime
+from moviepy.editor import *
 
 
 app = Flask(__name__)
@@ -42,13 +43,22 @@ def do_insert_api():
 
     name = args['Name']
     file_img = request.files.get('img', "")
-    file_voc = request.files.get('voc', "")
-    if file_img and file_voc:
-        ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
+    file_video = request.files.get('video', "")
+    ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
+    if file_video:
+        filename = secure_filename(file_video.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_video.save(file_path)
+        video = VideoFileClip(file_path)
+        audio = video.audio
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        audio.write_audiofile(voc_path)
+
+    if file_img:
         img_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.png')
         file_img.save(img_path)
-        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-        file_voc.save(voc_path)
+        # voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        # file_voc.save(voc_path)
         try:
             status = do_insert(name, ids[:-1], img_path, voc_path)
         except:
@@ -70,8 +80,16 @@ def image_path(image_name):
 @app.route('/api/v1/search', methods=['POST'])
 def do_search_api():
     file_img = request.files.get('img', "")
-    file_voc = request.files.get('voc', "")
-    if file_img and file_voc:
+    file_video = request.files.get('video', "")
+    if file_video:
+        filename = secure_filename(file_video.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_video.save(file_path)
+        video = VideoFileClip(file_path)
+        audio = video.audio
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        audio.write_audiofile(voc_path)
+    if file_img:
         ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
         img_path = os.path.join(app.config['DATA_FOLDER'], ids + '.png')
         file_img.save(img_path)
