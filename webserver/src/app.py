@@ -81,6 +81,7 @@ def image_path(image_name):
 def do_search_api():
     file_img = request.files.get('img', "")
     file_video = request.files.get('video', "")
+    ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
     if file_video:
         filename = secure_filename(file_video.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -90,11 +91,10 @@ def do_search_api():
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
         audio.write_audiofile(voc_path)
     if file_img:
-        ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
         img_path = os.path.join(app.config['DATA_FOLDER'], ids + '.png')
         file_img.save(img_path)
-        voc_path = os.path.join(app.config['DATA_FOLDER'], ids + '.wav')
-        file_voc.save(voc_path)
+        # voc_path = os.path.join(app.config['DATA_FOLDER'], ids + '.wav')
+        # file_voc.save(voc_path)
         try:
             res = do_search(img_path, voc_path)
             res[1] = request.url_root + "data/" + str(res[1]) + '.png'
