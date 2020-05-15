@@ -44,20 +44,20 @@ def do_insert_api():
     name = args['Name']
     file_img = request.files.get('img', "")
     file_video = request.files.get('video', "")
+    file_audio = request.files.get('audio', None)
     ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
     status = {'status': 'faile', 'message':'there is no file data'}
     if file_video:
         filename = secure_filename(file_video.filename)
-        if ".mov" in filename:
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file_video.save(file_path)
-            video = VideoFileClip(file_path)
-            audio = video.audio
-            voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-            audio.write_audiofile(voc_path)
-        elif ".wav" in filename:
-            voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-            file_video.save(voc_path)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_video.save(file_path)
+        video = VideoFileClip(file_path)
+        audio = video.audio
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        audio.write_audiofile(voc_path)
+    elif file_audio:
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        file_video.save(voc_path)
     else:
         return jsonify(status), 200
 
@@ -85,21 +85,21 @@ def image_path(image_name):
 @app.route('/api/v1/search', methods=['POST'])
 def do_search_api():
     file_img = request.files.get('img', "")
-    file_video = request.files.get('video', "")
+    file_video = request.files.get('video', None)
+    file_audio = request.files.get('audio', None)
     ids = '{0:%Y%m%d%H%M%S%f}'.format(datetime.datetime.now())
     status = {'status': 'faile', 'message':'no file data'}
     if file_video:
         filename = secure_filename(file_video.filename)
-        if ".mov" in filename:
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file_video.save(file_path)
-            video = VideoFileClip(file_path)
-            audio = video.audio
-            voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-            audio.write_audiofile(voc_path)
-        elif ".wav" in filename:
-            voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-            file_video.save(voc_path)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_video.save(file_path)
+        video = VideoFileClip(file_path)
+        audio = video.audio
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        audio.write_audiofile(voc_path)
+    elif file_audio:
+        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        file_video.save(voc_path)
     else:
         return jsonify(status), 200
 
@@ -115,9 +115,10 @@ def do_search_api():
         finally:
             os.remove(img_path)
             os.remove(voc_path)
-        return "{}".format(res), 200
+            return "{}".format(res), 200
     else:
         return jsonify(status), 200
+    # return jsonify(status), 200
 
 
 if __name__ == "__main__":
