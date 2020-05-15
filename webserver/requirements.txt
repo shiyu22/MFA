@@ -17,3 +17,4 @@ cycler
 easydict
 imageio
 insightface
+moviepy
