@@ -70,6 +70,7 @@ def do_insert_api():
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
     else:
         return jsonify(status), 200
+    return jsonify(status), 200
 
 
 @app.route('/data/<image_name>')
@@ -89,14 +90,14 @@ def do_search_api():
     status = {'status': 'faile', 'message':'no file data'}
     if file_video:
         filename = secure_filename(file_video.filename)
-        if filename in ".mov":
+        if ".mov" in filename:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file_video.save(file_path)
             video = VideoFileClip(file_path)
             audio = video.audio
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             audio.write_audiofile(voc_path)
-        elif filename in ".wav":
+        elif ".wav" in filename:
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             file_video.save(voc_path)
     else:
