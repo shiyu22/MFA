@@ -48,14 +48,14 @@ def do_insert_api():
     status = {'status': 'faile', 'message':'there is no file data'}
     if file_video:
         filename = secure_filename(file_video.filename)
-        if filename in ".mov":
+        if ".mov" in filename:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file_video.save(file_path)
             video = VideoFileClip(file_path)
             audio = video.audio
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             audio.write_audiofile(voc_path)
-        else if filename in ".wav":
+        elif ".wav" in filename:
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             file_video.save(voc_path)
     else:
@@ -96,7 +96,7 @@ def do_search_api():
             audio = video.audio
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             audio.write_audiofile(voc_path)
-        else if filename in ".wav":
+        elif filename in ".wav":
             voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
             file_video.save(voc_path)
     else:
