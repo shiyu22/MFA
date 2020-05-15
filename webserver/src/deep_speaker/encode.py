@@ -12,7 +12,7 @@ def voc_to_vec(voc):
     random.seed(123)
 
     model = DeepSpeakerModel()
-    model.m.load_weights('/app/src/deep_speaker/checkpoints/ResCNN_triplet_training_checkpoint_265.h5', by_name=True)
+    model.m.load_weights('/app/webserver/src/deep_speaker/checkpoints/ResCNN_triplet_training_checkpoint_265.h5', by_name=True)
 
     mfcc = sample_from_mfcc(read_mfcc(voc, SAMPLE_RATE), NUM_FRAMES)
     predict = model.m.predict(np.expand_dims(mfcc, axis=0))

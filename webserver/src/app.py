@@ -57,7 +57,7 @@ def do_insert_api():
         audio.write_audiofile(voc_path)
     elif file_audio:
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-        file_video.save(voc_path)
+        file_audio.save(voc_path)
     else:
         return jsonify(status), 200
 
@@ -99,7 +99,7 @@ def do_search_api():
         audio.write_audiofile(voc_path)
     elif file_audio:
         voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
-        file_video.save(voc_path)
+        file_audio.save(voc_path)
     else:
         return jsonify(status), 200
 
