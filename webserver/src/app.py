@@ -8,7 +8,7 @@ from service.insert import do_insert
 from service.count import do_count
 from indexer.index import milvus_client, create_table, insert_vectors, delete_table, search_vectors, create_index
 from flask_cors import CORS
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, request, send_file, jsonify, send_from_directory
 from flask_restful import reqparse
 from werkzeug.utils import secure_filename
 import numpy as np
@@ -17,13 +17,24 @@ import datetime
 from moviepy.editor import *
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static/build')
 app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
 app.config['DATA_FOLDER'] = DATA_PATH
 app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
 model = None
+
+@app.route('/', defaults={'path': ''})
+
+@app.route('/<path:path>')
+def serve_static_index(path):
+    print(app.static_folder + '/' + path)
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
 
 @app.route('/api/v1/count', methods=['POST'])
 def do_count_api():
