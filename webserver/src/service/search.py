@@ -35,6 +35,7 @@ def do_search(img, voice):
         feats_voc = voc_to_vec(voice)
         # print(feats_voc,feats_img)
 
+        res = ['false', -1 ,'-1']
         index_client = milvus_client()
         _, re_img = search_vectors(index_client, IMG_TABLE, [feats_img], 1)
         _, re_voc = search_vectors(index_client, VOC_TABLE, [feats_voc], 1)
@@ -45,8 +46,8 @@ def do_search(img, voice):
         dis_voc = float(re_voc[0][0].distance)
         print(ids_img,ids_voc,dis_img)
 
-        res = ['false', -1 ,'-1']
-        if dis_img>0.75 and dis_voc>0.5 and ids_img==ids_voc:
+        
+        if dis_img>0.75 and dis_voc>0.75 and ids_img==ids_voc:
             conn = connect_postgres_server()
             cur = conn.cursor()
             print(ids_voc)
@@ -57,8 +58,8 @@ def do_search(img, voice):
 
     except Exception as e:
         logging.error(e)
-        print("Fail with error {}")
-        return "Fail with error {}".format(e)
+        print("Fail with error {}".format(e))
+        return "Fail with error {}".format("please confirm only one face in camera")
     finally:
         if index_client:
             index_client.disconnect()

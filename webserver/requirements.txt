@@ -18,3 +18,4 @@ easydict
 imageio
 insightface
 moviepy
+pyopenssl

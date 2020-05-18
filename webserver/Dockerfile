@@ -11,4 +11,5 @@ RUN mkdir -p /tmp/import-pic
 RUN mkdir -p /tmp/data-pic
 
 RUN cd /app
-CMD python src/app.py
+RUN chmod +x /app/src/static/env.sh
+CMD ["/bin/bash", "-c", "/app/src/static/env.sh && python src/app.py"]
