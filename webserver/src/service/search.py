@@ -47,7 +47,7 @@ def do_search(img, voice):
         print(ids_img,ids_voc,dis_img)
 
         
-        if dis_img>0.75 and dis_voc>0.75 and ids_img==ids_voc:
+        if dis_img>0.75 and dis_voc>0.65 and ids_img==ids_voc:
             conn = connect_postgres_server()
             cur = conn.cursor()
             print(ids_voc)
@@ -61,8 +61,6 @@ def do_search(img, voice):
         print("Fail with error {}".format(e))
         return "Fail with error {}".format("please confirm only one face in camera")
     finally:
-        if index_client:
-            index_client.disconnect()
         if conn:
             cur.close()
             conn.close()

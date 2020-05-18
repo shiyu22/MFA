@@ -102,14 +102,14 @@ def do_search_api():
     status = {'status': 'faile', 'message':'no file data'}
     if file_video:
         filename = secure_filename(file_video.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_path = os.path.join(app.config['DATA_FOLDER'], filename)
         file_video.save(file_path)
         video = VideoFileClip(file_path)
         audio = video.audio
-        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        voc_path = os.path.join(app.config['DATA_FOLDER'], ids[:-1] + '.wav')
         audio.write_audiofile(voc_path)
     elif file_audio:
-        voc_path = os.path.join(app.config['UPLOAD_FOLDER'], ids[:-1] + '.wav')
+        voc_path = os.path.join(app.config['DATA_FOLDER'], ids[:-1] + '.wav')
         file_audio.save(voc_path)
     else:
         return jsonify(status), 200
@@ -118,15 +118,15 @@ def do_search_api():
         img_path = os.path.join(app.config['DATA_FOLDER'], ids + '.png')
         file_img.save(img_path)
         try:
-            res = do_search(img_path, voc_path)
-            res[1] = request.url_root + "data/" + str(res[1]) + '.png'
+            status = do_search(img_path, voc_path)
+            status[1] = request.url_root + "data/" + str(status[1]) + '.png'
         except:
             status = {'status': 'faile', 'message':'please confirm only one face in camera'}
             return jsonify(status), 200
         finally:
             os.remove(img_path)
             os.remove(voc_path)
-            return "{}".format(res), 200
+            return "{}".format(status), 200
     else:
         return jsonify(status), 200
     # return jsonify(status), 200
