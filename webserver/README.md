@@ -47,5 +47,5 @@
 
 
 
-docker run -td -p 5003:5000 -e API_URL=https://192.168.1.85:5100 -e "MILVUS_HOST=192.168.1.85" -e "MILVUS_PORT=19533" zilliz/mfa:test1
+docker run -td -p 5003:5000 -e API_URL=https://192.168.1.85:5003 -e "MILVUS_HOST=192.168.1.85" -e "MILVUS_PORT=19533" milvusbootcamp/mfa-demo:0.1.0
 
