@@ -17,7 +17,7 @@ import datetime
 from moviepy.editor import *
 
 
-app = Flask(__name__, static_folder='static/build')
+app = Flask(__name__, static_folder='src/static/build')
 app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
 app.config['DATA_FOLDER'] = DATA_PATH
 app.config['JSON_SORT_KEYS'] = False
@@ -33,7 +33,7 @@ def serve_static_index(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
-        return send_from_directory(app.static_folder, '/index.html')
+        return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/api/v1/count', methods=['POST'])
