@@ -17,7 +17,7 @@ import datetime
 from moviepy.editor import *
 
 
-app = Flask(__name__, static_folder='/app/src/static/build')
+app = Flask(__name__, static_folder='static/build')
 app.config['UPLOAD_FOLDER'] = UPLOAD_PATH
 app.config['DATA_FOLDER'] = DATA_PATH
 app.config['JSON_SORT_KEYS'] = False
